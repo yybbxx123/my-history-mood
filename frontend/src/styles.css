@@ -1,0 +1,125 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px; }
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+.question { margin-bottom: 16px; }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+textarea, input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px;
+}
+.row { display: flex; gap: 10px; margin-top: 12px; }
+button {
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+button.secondary { background: #4b5563; }
+.chat-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 220px;
+  max-height: 360px;
+  overflow: auto;
+  background: #fafafa;
+  margin-bottom: 10px;
+}
+.chat-item { margin-bottom: 8px; line-height: 1.6; }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.question {
+  margin-bottom: 16px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+textarea,
+.chat-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+button {
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.chat-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 220px;
+  max-height: 360px;
+  overflow: auto;
+  background: #fafafa;
+}
+
+.chat-item {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
