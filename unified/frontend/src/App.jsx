@@ -4,8 +4,8 @@ import { analyze, chat, getFigures, getQuestions } from "./api.js";
 const LS_KEY = "unified_assessment_result_v1";
 
 export default function App() {
-  const [page, setPage] = useState("assessment"); // assessment | story | profile
-  const [phase, setPhase] = useState("home"); // home | quiz | result | chat (within assessment)
+  const [page, setPage] = useState("assessment"); // assessment | story | dialogue | profile
+  const [phase, setPhase] = useState("home"); // home | quiz | result (within assessment)
 
   const [questions, setQuestions] = useState([]);
   const [figures, setFigures] = useState([]);
@@ -204,7 +204,7 @@ export default function App() {
                     <button className="btn-primary" onClick={saveResult}>
                       保存到我的
                     </button>
-                    <button className="btn-secondary" onClick={() => setPhase("chat")}>
+                    <button className="btn-secondary" onClick={() => setPage("dialogue")}>
                       与人物对话
                     </button>
                     <button className="btn-secondary" onClick={resetAssessment}>
@@ -216,43 +216,6 @@ export default function App() {
             </div>
           )}
 
-          {phase === "chat" && (
-            <div className="assessment-section">
-              <div className="page-header">
-                <h1>与人物对话</h1>
-                <p>调用后端 `/api/chat`</p>
-              </div>
-
-              <div className="card">
-                <div className="chat-box">
-                  {chatHistory.map((m, i) => (
-                    <div key={i} className="chat-item">
-                      <b>{m.role === "user" ? "你" : result?.matched_figure?.name || "人物"}：</b>
-                      {m.content}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="row">
-                  <input
-                    className="chat-input"
-                    value={chatText}
-                    onChange={(e) => setChatText(e.target.value)}
-                    placeholder="输入你想问的问题..."
-                  />
-                  <button className="btn-primary" onClick={sendChat}>
-                    发送
-                  </button>
-                </div>
-
-                <div className="row">
-                  <button className="btn-secondary" onClick={() => setPhase("result")}>
-                    返回结果
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         <div id="story" className={`page ${page === "story" ? "active" : ""}`}>
@@ -302,6 +265,73 @@ export default function App() {
           </div>
         </div>
 
+        <div id="dialogue" className={`page ${page === "dialogue" ? "active" : ""}`}>
+          <div className="page-header">
+            <h1>对话</h1>
+            {result?.matched_figure?.name ? (
+              <p>
+                与和你最像的人物「{result.matched_figure.name}」聊天（后端 `/api/chat`）
+              </p>
+            ) : (
+              <p>完成测评后即可与匹配到的历史人物对话</p>
+            )}
+          </div>
+
+          {!result?.matched_figure?.name ? (
+            <div className="card" style={{ textAlign: "center", padding: "32px 20px" }}>
+              <div className="empty-icon" style={{ fontSize: 48, marginBottom: 12 }}>
+                💬
+              </div>
+              <h3 style={{ margin: "0 0 8px" }}>还没有匹配人物</h3>
+              <p className="muted" style={{ marginBottom: 20 }}>
+                请先完成性格测评，系统会为你匹配一位历史人物后再来对话。
+              </p>
+              <button className="btn-primary" onClick={() => setPage("assessment")}>
+                去测评
+              </button>
+            </div>
+          ) : (
+            <div className="card">
+              <div className="chat-box">
+                {chatHistory.map((m, i) => (
+                  <div key={i} className="chat-item">
+                    <b>{m.role === "user" ? "你" : result.matched_figure.name}：</b>
+                    {m.content}
+                  </div>
+                ))}
+              </div>
+
+              <div className="row">
+                <input
+                  className="chat-input"
+                  value={chatText}
+                  onChange={(e) => setChatText(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && sendChat()}
+                  placeholder={`向 ${result.matched_figure.name} 提问…`}
+                />
+                <button className="btn-primary" onClick={sendChat}>
+                  发送
+                </button>
+              </div>
+
+              <div className="row">
+                <button
+                  className="btn-secondary"
+                  onClick={() => {
+                    setPage("assessment");
+                    setPhase("result");
+                  }}
+                >
+                  查看测评结果
+                </button>
+                <button className="btn-secondary" onClick={() => setChatHistory([])}>
+                  清空对话
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
         <div id="profile" className={`page ${page === "profile" ? "active" : ""}`}>
           <div className="profile-header">
             <div className="wogua-message">🥒 倭瓜告诉您：</div>
@@ -320,7 +350,10 @@ export default function App() {
                   </div>
                   <div className="character-story">{result.story_report}</div>
                   <div className="row" style={{ marginTop: 12 }}>
-                    <button className="btn-primary" onClick={() => setPage("assessment")}>
+                    <button className="btn-primary" onClick={() => setPage("dialogue")}>
+                      去对话
+                    </button>
+                    <button className="btn-secondary" onClick={() => setPage("assessment")}>
                       去测评
                     </button>
                     <button className="btn-secondary" onClick={() => localStorage.removeItem(LS_KEY)}>
@@ -351,6 +384,10 @@ export default function App() {
         <div className={`nav-item ${page === "story" ? "active" : ""}`} onClick={() => setPage("story")}>
           <div className="nav-icon">📖</div>
           <span className="nav-text">故事</span>
+        </div>
+        <div className={`nav-item ${page === "dialogue" ? "active" : ""}`} onClick={() => setPage("dialogue")}>
+          <div className="nav-icon">💬</div>
+          <span className="nav-text">对话</span>
         </div>
         <div className={`nav-item ${page === "profile" ? "active" : ""}`} onClick={() => setPage("profile")}>
           <div className="nav-icon">👤</div>

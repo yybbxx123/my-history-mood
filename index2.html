@@ -8,11 +8,8 @@
 </head>
 <body>
     <div class="app">
-        <!-- 主内容区域 -->
         <main class="main-content">
-            <!-- 测评模块 -->
             <div id="assessment" class="page active">
-                <!-- 测评首页 -->
                 <div id="assessmentHome" class="assessment-section">
                     <div class="page-header">
                         <h1>性格测评</h1>
@@ -28,38 +25,28 @@
                     </div>
                 </div>
 
-                <!-- 测评问题页面 -->
-                <div id="assessmentQuiz" class="assessment-section" style="display: none;">
+                <div id="assessmentQuiz" class="assessment-section" style="display:none;">
                     <div class="quiz-header">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
                         <span class="question-counter" id="questionCounter">1 / 8</span>
                     </div>
-                    
                     <div class="question-container">
                         <h2 class="question-text" id="questionText"></h2>
-                        <div class="options-container" id="optionsContainer">
-                            <!-- 选项将通过JS动态生成 -->
-                        </div>
+                        <div class="options-container" id="optionsContainer"></div>
                     </div>
-                    
                     <div class="quiz-navigation">
-                        <button class="btn-secondary" id="prevQuestion" style="display: none;">上一题</button>
-                        <button class="btn-primary" id="nextQuestion" style="display: none;">下一题</button>
-                        <button class="btn-primary" id="finishQuiz" style="display: none;">完成测评</button>
+                        <button class="btn-secondary" id="prevQuestion" style="display:none;">上一题</button>
+                        <button class="btn-primary" id="nextQuestion" style="display:none;">下一题</button>
+                        <button class="btn-primary" id="finishQuiz" style="display:none;">完成测评</button>
                     </div>
                 </div>
 
-                <!-- 测评结果页面 -->
-                <div id="assessmentResult" class="assessment-section" style="display: none;">
+                <div id="assessmentResult" class="assessment-section" style="display:none;">
                     <div class="page-header">
                         <h1>测评结果</h1>
                         <p>你的古代人格原型</p>
                     </div>
-                    <div class="result-container" id="resultContainer">
-                        <!-- 结果将通过JS动态生成 -->
-                    </div>
+                    <div class="result-container" id="resultContainer"></div>
                     <div class="result-actions">
                         <button class="btn-primary" id="saveResult">保存到我的</button>
                         <button class="btn-secondary" id="retakeQuiz">重新测评</button>
@@ -67,7 +54,6 @@
                 </div>
             </div>
 
-            <!-- 故事模块 -->
             <div id="story" class="page">
                 <div class="page-header">
                     <h1>历史人物故事</h1>
@@ -75,9 +61,7 @@
                 </div>
                 <div class="story-container">
                     <div class="story-card-wrapper">
-                        <div class="story-card-main" id="storyCard">
-                            <!-- 故事卡片内容将通过JS动态生成 -->
-                        </div>
+                        <div class="story-card-main" id="storyCard"></div>
                         <div class="story-navigation">
                             <button class="nav-btn" id="prevStory">← 上一个</button>
                             <span class="story-counter" id="storyCounter">1 / 50</span>
@@ -87,7 +71,30 @@
                 </div>
             </div>
 
-            <!-- 我的模块 -->
+            <div id="chat" class="page">
+                <div class="page-header">
+                    <h1>人物对话</h1>
+                    <p>选择一位与你相似的历史人物进行陪伴式对话</p>
+                </div>
+                <div class="chat-panel">
+                    <div class="chat-guide" id="chatGuide">
+                        <div class="empty-icon">💬</div>
+                        <h3>先完成测评，再开启对话</h3>
+                        <p>完成测评后，你可以从匹配到的人物中选择一位开始聊天。</p>
+                        <button class="btn-primary" id="goToAssessmentFromChat">去测评</button>
+                    </div>
+                    <div class="chat-content" id="chatContent" style="display:none;">
+                        <div class="chat-selector" id="chatSelector"></div>
+                        <div class="chat-character-card" id="chatCharacterCard"></div>
+                        <div class="chat-messages" id="chatMessages"></div>
+                        <div class="chat-input-bar">
+                            <input id="chatInput" class="chat-input" type="text" placeholder="输入你想和历史人物聊的话题...">
+                            <button class="btn-primary chat-send-btn" id="sendChatBtn">发送</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="profile" class="page">
                 <div class="profile-header">
                     <div class="wogua-message">🥒 倭瓜告诉您：</div>
@@ -96,7 +103,6 @@
                 </div>
                 <div class="profile-section">
                     <div class="my-result" id="myResult">
-                        <!-- 测评结果将显示在这里 -->
                         <div class="no-result">
                             <div class="empty-icon">📝</div>
                             <h3>还没有测评结果</h3>
@@ -104,50 +110,23 @@
                             <button class="btn-primary" id="goToAssessment">去测评</button>
                         </div>
                     </div>
-                    
                     <div class="menu-list">
-                        <div class="menu-item">
-                            <span class="menu-icon">📚</span>
-                            <span class="menu-text">我的人格类型</span>
-                            <span class="menu-arrow">></span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="menu-icon">🎭</span>
-                            <span class="menu-text">历史人物档案</span>
-                            <span class="menu-arrow">></span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="menu-icon">⚙️</span>
-                            <span class="menu-text">设置</span>
-                            <span class="menu-arrow">></span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="menu-icon">❓</span>
-                            <span class="menu-text">帮助中心</span>
-                            <span class="menu-arrow">></span>
-                        </div>
+                        <div class="menu-item"><span class="menu-icon">📚</span><span class="menu-text">我的人格类型</span><span class="menu-arrow">></span></div>
+                        <div class="menu-item"><span class="menu-icon">🎭</span><span class="menu-text">历史人物档案</span><span class="menu-arrow">></span></div>
+                        <div class="menu-item"><span class="menu-icon">⚙️</span><span class="menu-text">设置</span><span class="menu-arrow">></span></div>
+                        <div class="menu-item"><span class="menu-icon">❓</span><span class="menu-text">帮助中心</span><span class="menu-arrow">></span></div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <!-- 底部导航 -->
         <nav class="bottom-nav">
-            <div class="nav-item active" data-page="assessment">
-                <div class="nav-icon">📊</div>
-                <span class="nav-text">测评</span>
-            </div>
-            <div class="nav-item" data-page="story">
-                <div class="nav-icon">📖</div>
-                <span class="nav-text">故事</span>
-            </div>
-            <div class="nav-item" data-page="profile">
-                <div class="nav-icon">👤</div>
-                <span class="nav-text">我的</span>
-            </div>
+            <div class="nav-item active" data-page="assessment"><div class="nav-icon">📊</div><span class="nav-text">测评</span></div>
+            <div class="nav-item" data-page="story"><div class="nav-icon">📖</div><span class="nav-text">故事</span></div>
+            <div class="nav-item" data-page="chat"><div class="nav-icon">💬</div><span class="nav-text">对话</span></div>
+            <div class="nav-item" data-page="profile"><div class="nav-icon">👤</div><span class="nav-text">我的</span></div>
         </nav>
     </div>
-
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
